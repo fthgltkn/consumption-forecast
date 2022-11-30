@@ -1,5 +1,6 @@
 from sklearn.model_selection import TimeSeriesSplit
-from seffaflik.elektrik.tuketim import gerceklesen
+from seffaflik.elektrik.tuketim import gerceklesen as tuk_gerceklesen
+from seffaflik.elektrik.uretim import gerceklesen as uret_gerceklesen
 from sklearn.metrics import mean_absolute_error
 from catboost import CatBoostRegressor
 import plotly.graph_objects as go
@@ -12,8 +13,16 @@ def select_period(period):
     periods={"1 gün":24,"2 gün":48,"3 gün":72,"1 hafta":168,"2 hafta":336}
     return periods[period]
 
+def get_uretim_data(start_date, kaynak=None):
+    df = uret_gerceklesen(start_date).iloc[:-1,:]
+    df['Tarih'] = pd.to_datetime(df['Tarih']) + pd.to_timedelta(df['Saat'], unit='h')
+    df.drop(columns='Saat', inplace=True)
+    df.rename(columns={'Tarih': 'date'}, inplace=True)
+    df = df[['date', kaynak]]
+    return df
+
 def get_consumption_data(start_date):
-    df = gerceklesen(start_date).iloc[:-1,:]
+    df = tuk_gerceklesen(start_date).iloc[:-1,:]
     df['Tarih'] = pd.to_datetime(df['Tarih']) + pd.to_timedelta(df['Saat'], unit='h')
     df.drop(columns='Saat', inplace=True)
     df.rename(columns={'Tarih': 'date', 'Tüketim': 'consumption'}, inplace=True)
@@ -48,7 +57,7 @@ def date_features(df):
     df_c['weekofyear']=df_c['date'].dt.weekofyear
     return(df_c)
 
-def forecast_func(df,fh):
+def forecast_func(df,fh, kaynak=None):
     # forecast datasının oluşturulması 
     fh_new=fh+1
     date=pd.date_range(start=df.date.tail(1).iloc[0],periods=fh_new,freq='H',name='date')
@@ -56,21 +65,21 @@ def forecast_func(df,fh):
     df_fe=pd.merge(df,date,how='outer')
     
     #feature engineering
-    col_list=['consumption']
+    col_list=[kaynak]
     df_fe=rolling_features(df_fe,fh_new,col_list=col_list)
     df_fe=date_features(df_fe)
     df_fe=df_fe[fh_new+30:].reset_index(drop=True)
 
     # train-test split 
-    split_date = df_fe[df_fe['consumption'].isnull()].iloc[0,0]
+    split_date = df_fe[df_fe[kaynak].isnull()].iloc[0,0]
 
     historical_data = df_fe[df_fe['date'] < split_date]
-    forecast_data = df_fe[df_fe['date'] >= split_date].drop(columns=['consumption']).set_index('date')
+    forecast_data = df_fe[df_fe['date'] >= split_date].drop(columns=[kaynak]).set_index('date')
 
-    X = historical_data.drop(columns=['consumption']).set_index('date')
-    y = historical_data[['date', 'consumption']].set_index('date')
+    X = historical_data.drop(columns=[kaynak]).set_index('date')
+    y = historical_data[['date', kaynak]].set_index('date')
 
-    tscv = TimeSeriesSplit(n_splits=3, test_size=fh_new * 20)
+    tscv = TimeSeriesSplit(n_splits=3, test_size=fh_new * 10)
 
     score_list = []
     fold = 1
@@ -97,7 +106,7 @@ def forecast_func(df,fh):
     forecasted=pd.DataFrame(unseen_preds[2],columns=['forecasting']).set_index(forecast_data.index)
 
     fig1 = go.Figure()
-    fig1.add_trace(go.Scatter(x=df_fe.date.iloc[-fh_new*5:],y=df_fe.consumption.iloc[-fh_new*5:],name='Tarihsel Veri',mode='lines'))
+    fig1.add_trace(go.Scatter(x=df_fe.date.iloc[-fh_new*5:],y=df_fe[kaynak].iloc[-fh_new*5:],name='Tarihsel Veri',mode='lines'))
     fig1.add_trace(go.Scatter(x=forecasted.index,y=forecasted["forecasting"],name='tahmin',mode='lines'))
     fig1.update_layout(legend=dict(orientation="h",yanchor="bottom",y=1.02,xanchor="right",x=1))
     f_importance=pd.concat([pd.Series(X.columns.to_list(),name="Feature"),pd.Series(np.mean(importance,axis=0),name="Importance")],axis=1).sort_values(by="Importance",ascending=True)
