@@ -26,7 +26,7 @@ if page == "Tahmin":
                 start_date="2016-01-01"
                 df=get_consumption_data(start_date=str(start_date))
                 fig1,fig2,forc_data= forecast_func(df,select_period(fh_selection),kaynak='consumption')
-                st.markdown("<h3 style='text-align:center;'>Tahmin sonuçları</h3>",unsafe_allow_html=True)
+                st.markdown("<h3 style='text-align:center;'>Tüketim tahmin sonuçları</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig1)
                 st.markdown("<h3 style='text-align:center;'>Model için en önemli değişkenler</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig2)
@@ -47,7 +47,7 @@ if page == "Tahmin":
                 start_date="2020-01-01"
                 df=get_uretim_data(start_date=str(start_date), kaynak='Doğalgaz')
                 fig1,fig2,forc_data= forecast_func(df,select_period(fh_selection), kaynak='Doğalgaz')
-                st.markdown("<h3 style='text-align:center;'>Tahmin sonuçları</h3>",unsafe_allow_html=True)
+                st.markdown("<h3 style='text-align:center;'>Doğalgaz tahmin sonuçları</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig1)
                 st.markdown("<h3 style='text-align:center;'>Model için en önemli değişkenler</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig2)
@@ -69,7 +69,7 @@ if page == "Tahmin":
                 start_date="2020-01-01"
                 df=get_uretim_data(start_date=str(start_date), kaynak='Barajlı')
                 fig1,fig2,forc_data= forecast_func(df,select_period(fh_selection), kaynak='Barajlı')
-                st.markdown("<h3 style='text-align:center;'>Tahmin sonuçları</h3>",unsafe_allow_html=True)
+                st.markdown("<h3 style='text-align:center;'>Barajlı tahmin sonuçları</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig1)
                 st.markdown("<h3 style='text-align:center;'>Model için en önemli değişkenler</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig2)
@@ -90,7 +90,7 @@ if page == "Tahmin":
                 start_date="2020-01-01"
                 df=get_uretim_data(start_date=str(start_date), kaynak='Linyit')
                 fig1,fig2,forc_data= forecast_func(df,select_period(fh_selection), kaynak='Linyit')
-                st.markdown("<h3 style='text-align:center;'>Tahmin sonuçları</h3>",unsafe_allow_html=True)
+                st.markdown("<h3 style='text-align:center;'>Linyit tahmin sonuçları</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig1)
                 st.markdown("<h3 style='text-align:center;'>Model için en önemli değişkenler</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig2)
@@ -111,7 +111,7 @@ if page == "Tahmin":
                 start_date="2020-01-01"
                 df=get_uretim_data(start_date=str(start_date), kaynak='Akarsu')
                 fig1,fig2,forc_data= forecast_func(df,select_period(fh_selection), kaynak='Akarsu')
-                st.markdown("<h3 style='text-align:center;'>Tahmin sonuçları</h3>",unsafe_allow_html=True)
+                st.markdown("<h3 style='text-align:center;'>Akarsu tahmin sonuçları</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig1)
                 st.markdown("<h3 style='text-align:center;'>Model için en önemli değişkenler</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig2)
@@ -132,7 +132,7 @@ if page == "Tahmin":
                 start_date="2020-01-01"
                 df=get_uretim_data(start_date=str(start_date), kaynak='İthal Kömür')
                 fig1,fig2,forc_data= forecast_func(df,select_period(fh_selection), kaynak='İthal Kömür')
-                st.markdown("<h3 style='text-align:center;'>Tahmin sonuçları</h3>",unsafe_allow_html=True)
+                st.markdown("<h3 style='text-align:center;'>İthal Kömür tahmin sonuçları</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig1)
                 st.markdown("<h3 style='text-align:center;'>Model için en önemli değişkenler</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig2)
@@ -153,7 +153,7 @@ if page == "Tahmin":
                 start_date="2020-01-01"
                 df=get_uretim_data(start_date=str(start_date), kaynak='Rüzgar')
                 fig1,fig2,forc_data= forecast_func(df,select_period(fh_selection), kaynak='Rüzgar')
-                st.markdown("<h3 style='text-align:center;'>Tahmin sonuçları</h3>",unsafe_allow_html=True)
+                st.markdown("<h3 style='text-align:center;'>Rüzgar tahmin sonuçları</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig1)
                 st.markdown("<h3 style='text-align:center;'>Model için en önemli değişkenler</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig2)
@@ -174,7 +174,7 @@ if page == "Tahmin":
                 start_date="2020-01-01"
                 df=get_uretim_data(start_date=str(start_date), kaynak='Güneş')
                 fig1,fig2,forc_data= forecast_func(df,select_period(fh_selection), kaynak='Güneş')
-                st.markdown("<h3 style='text-align:center;'>Tahmin sonuçları</h3>",unsafe_allow_html=True)
+                st.markdown("<h3 style='text-align:center;'>Güneş tahmin sonuçları</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig1)
                 st.markdown("<h3 style='text-align:center;'>Model için en önemli değişkenler</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig2)
@@ -196,7 +196,7 @@ if page == "Tahmin":
                 start_date="2020-01-01"
                 df=get_uretim_data(start_date=str(start_date), kaynak='Fuel Oil')
                 fig1,fig2,forc_data= forecast_func(df,select_period(fh_selection), kaynak='Fuel Oil')
-                st.markdown("<h3 style='text-align:center;'>Tahmin sonuçları</h3>",unsafe_allow_html=True)
+                st.markdown("<h3 style='text-align:center;'>Fuel Oil tahmin sonuçları</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig1)
                 st.markdown("<h3 style='text-align:center;'>Model için en önemli değişkenler</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig2)
@@ -218,7 +218,7 @@ if page == "Tahmin":
                 start_date="2020-01-01"
                 df=get_uretim_data(start_date=str(start_date), kaynak='Jeo Termal')
                 fig1,fig2,forc_data= forecast_func(df,select_period(fh_selection), kaynak='Jeo Termal')
-                st.markdown("<h3 style='text-align:center;'>Tahmin sonuçları</h3>",unsafe_allow_html=True)
+                st.markdown("<h3 style='text-align:center;'>Jeo Termal tahmin sonuçları</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig1)
                 st.markdown("<h3 style='text-align:center;'>Model için en önemli değişkenler</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig2)
@@ -240,7 +240,7 @@ if page == "Tahmin":
                 start_date="2020-01-01"
                 df=get_uretim_data(start_date=str(start_date), kaynak='Asfaltit Kömür')
                 fig1,fig2,forc_data= forecast_func(df,select_period(fh_selection), kaynak='Asfaltit Kömür')
-                st.markdown("<h3 style='text-align:center;'>Tahmin sonuçları</h3>",unsafe_allow_html=True)
+                st.markdown("<h3 style='text-align:center;'>Asfaltit Kömür tahmin sonuçları</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig1)
                 st.markdown("<h3 style='text-align:center;'>Model için en önemli değişkenler</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig2)
@@ -262,7 +262,7 @@ if page == "Tahmin":
                 start_date="2020-01-01"
                 df=get_uretim_data(start_date=str(start_date), kaynak='Taş Kömür')
                 fig1,fig2,forc_data= forecast_func(df,select_period(fh_selection), kaynak='Taş Kömür')
-                st.markdown("<h3 style='text-align:center;'>Tahmin sonuçları</h3>",unsafe_allow_html=True)
+                st.markdown("<h3 style='text-align:center;'>Taş Kömür tahmin sonuçları</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig1)
                 st.markdown("<h3 style='text-align:center;'>Model için en önemli değişkenler</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig2)
@@ -284,7 +284,7 @@ if page == "Tahmin":
                 start_date="2020-01-01"
                 df=get_uretim_data(start_date=str(start_date), kaynak='Biyokütle')
                 fig1,fig2,forc_data= forecast_func(df,select_period(fh_selection), kaynak='Biyokütle')
-                st.markdown("<h3 style='text-align:center;'>Tahmin sonuçları</h3>",unsafe_allow_html=True)
+                st.markdown("<h3 style='text-align:center;'>Biyokütle tahmin sonuçları</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig1)
                 st.markdown("<h3 style='text-align:center;'>Model için en önemli değişkenler</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig2)
