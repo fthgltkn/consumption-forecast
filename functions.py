@@ -55,6 +55,14 @@ def date_features(df):
     df_c['dayofyear']=df_c['date'].dt.dayofyear
     df_c['dayofmonth']=df_c['date'].dt.day
     df_c['weekofyear']=df_c['date'].dt.weekofyear
+    df_c['day_month_sin'] = np.sin(df_c.dayofmonth*(2.*np.pi/30))
+    df_c['day_month_cos'] = np.cos(df_c.dayofmonth*(2.*np.pi/30))
+    df_c['month_sin'] = np.sin(df_c.month*(2.*np.pi/12))
+    df_c['month_cos'] = np.cos(df_c.month*(2.*np.pi/12))
+    df_c['hour_sin'] = np.sin(df_c.hour*(2.*np.pi/24))
+    df_c['hour_cos'] = np.cos(df_c.hour*(2.*np.pi/24))
+    df_c['week_sin'] = np.sin(df_c.dayofweek*(2.*np.pi/7))
+    df_c['week_cos'] = np.cos(df_c.dayofweek*(2.*np.pi/7))
     return(df_c)
 
 def forecast_func(df,fh, kaynak=None):
@@ -113,3 +121,5 @@ def forecast_func(df,fh, kaynak=None):
     fig2 = px.bar(f_importance.tail(10), x='Importance', y='Feature')
     forc_data = forecasted[["forecasting"]]
     return fig1, fig2, forc_data
+
+# %%
