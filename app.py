@@ -18,18 +18,20 @@ if page == "Tahmin":
                'Güneş', 'Fuel Oil', 'Jeo Termal', 'Asfaltit Kömür', 'Taş Kömür', 'Biyokütle']
 
     source_select = st.selectbox('Hangi kaynağın tahmin edileceğini seçiniz', options=sources)
-    fh_selection=st.selectbox("Tahmin uzunluğunu seçiniz",["1 gün","2 gün","3 gün","1 hafta","2 hafta"])
+    fh_selection=st.selectbox("Tahmin uzunluğunu seçiniz",["1 gün","2 gün","3 gün","1 hafta","2 hafta","1 ay"])
     button=st.button("Tahmin Et")
     if source_select == 'tüketim':
         if button==True:
             with st.spinner("Tahmin yapılıyor, lütfen bekleyiniz..."):
                 start_date="2016-01-01"
                 df=get_consumption_data(start_date=str(start_date))
-                fig1,fig2,forc_data= forecast_func(df,select_period(fh_selection),kaynak='consumption')
+                fig1,fig2,forc_data,fig3= forecast_func(df,select_period(fh_selection),kaynak='consumption')
                 st.markdown("<h3 style='text-align:center;'>Tüketim tahmin sonuçları</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig1)
                 st.markdown("<h3 style='text-align:center;'>Model için en önemli değişkenler</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig2)
+                st.markdown("<h3 style='text-align:center;'>Tahmin analizi</h3>",unsafe_allow_html=True)
+                st.plotly_chart(fig3)
 
             buffer = io.BytesIO()
             with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
@@ -46,11 +48,13 @@ if page == "Tahmin":
             with st.spinner("Tahmin yapılıyor, lütfen bekleyiniz..."):
                 start_date="2020-01-01"
                 df=get_uretim_data(start_date=str(start_date), kaynak='Doğalgaz')
-                fig1,fig2,forc_data= forecast_func(df,select_period(fh_selection), kaynak='Doğalgaz')
+                fig1,fig2,forc_data,fig3= forecast_func(df,select_period(fh_selection), kaynak='Doğalgaz')
                 st.markdown("<h3 style='text-align:center;'>Doğalgaz tahmin sonuçları</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig1)
                 st.markdown("<h3 style='text-align:center;'>Model için en önemli değişkenler</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig2)
+                st.markdown("<h3 style='text-align:center;'>Tahmin analizi</h3>",unsafe_allow_html=True)
+                st.plotly_chart(fig3)
 
             buffer = io.BytesIO()
             with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
@@ -68,11 +72,13 @@ if page == "Tahmin":
             with st.spinner("Tahmin yapılıyor, lütfen bekleyiniz..."):
                 start_date="2020-01-01"
                 df=get_uretim_data(start_date=str(start_date), kaynak='Barajlı')
-                fig1,fig2,forc_data= forecast_func(df,select_period(fh_selection), kaynak='Barajlı')
+                fig1,fig2,forc_data,fig3= forecast_func(df,select_period(fh_selection), kaynak='Barajlı')
                 st.markdown("<h3 style='text-align:center;'>Barajlı tahmin sonuçları</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig1)
                 st.markdown("<h3 style='text-align:center;'>Model için en önemli değişkenler</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig2)
+                st.markdown("<h3 style='text-align:center;'>Tahmin analizi</h3>",unsafe_allow_html=True)
+                st.plotly_chart(fig3)
 
             buffer = io.BytesIO()
             with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
@@ -89,11 +95,13 @@ if page == "Tahmin":
             with st.spinner("Tahmin yapılıyor, lütfen bekleyiniz..."):
                 start_date="2020-01-01"
                 df=get_uretim_data(start_date=str(start_date), kaynak='Linyit')
-                fig1,fig2,forc_data= forecast_func(df,select_period(fh_selection), kaynak='Linyit')
+                fig1,fig2,forc_data,fig3= forecast_func(df,select_period(fh_selection), kaynak='Linyit')
                 st.markdown("<h3 style='text-align:center;'>Linyit tahmin sonuçları</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig1)
                 st.markdown("<h3 style='text-align:center;'>Model için en önemli değişkenler</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig2)
+                st.markdown("<h3 style='text-align:center;'>Tahmin analizi</h3>",unsafe_allow_html=True)
+                st.plotly_chart(fig3,)
 
             buffer = io.BytesIO()
             with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
@@ -110,11 +118,13 @@ if page == "Tahmin":
             with st.spinner("Tahmin yapılıyor, lütfen bekleyiniz..."):
                 start_date="2020-01-01"
                 df=get_uretim_data(start_date=str(start_date), kaynak='Akarsu')
-                fig1,fig2,forc_data= forecast_func(df,select_period(fh_selection), kaynak='Akarsu')
+                fig1,fig2,forc_data,fig3= forecast_func(df,select_period(fh_selection), kaynak='Akarsu')
                 st.markdown("<h3 style='text-align:center;'>Akarsu tahmin sonuçları</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig1)
                 st.markdown("<h3 style='text-align:center;'>Model için en önemli değişkenler</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig2)
+                st.markdown("<h3 style='text-align:center;'>Tahmin analizi</h3>",unsafe_allow_html=True)
+                st.plotly_chart(fig3,)
 
             buffer = io.BytesIO()
             with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
@@ -131,11 +141,13 @@ if page == "Tahmin":
             with st.spinner("Tahmin yapılıyor, lütfen bekleyiniz..."):
                 start_date="2020-01-01"
                 df=get_uretim_data(start_date=str(start_date), kaynak='İthal Kömür')
-                fig1,fig2,forc_data= forecast_func(df,select_period(fh_selection), kaynak='İthal Kömür')
+                fig1,fig2,forc_data,fig3= forecast_func(df,select_period(fh_selection), kaynak='İthal Kömür')
                 st.markdown("<h3 style='text-align:center;'>İthal Kömür tahmin sonuçları</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig1)
                 st.markdown("<h3 style='text-align:center;'>Model için en önemli değişkenler</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig2)
+                st.markdown("<h3 style='text-align:center;'>Tahmin analizi</h3>",unsafe_allow_html=True)
+                st.plotly_chart(fig3,)
 
             buffer = io.BytesIO()
             with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
@@ -152,11 +164,13 @@ if page == "Tahmin":
             with st.spinner("Tahmin yapılıyor, lütfen bekleyiniz..."):
                 start_date="2020-01-01"
                 df=get_uretim_data(start_date=str(start_date), kaynak='Rüzgar')
-                fig1,fig2,forc_data= forecast_func(df,select_period(fh_selection), kaynak='Rüzgar')
+                fig1,fig2,forc_data,fig3= forecast_func(df,select_period(fh_selection), kaynak='Rüzgar')
                 st.markdown("<h3 style='text-align:center;'>Rüzgar tahmin sonuçları</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig1)
                 st.markdown("<h3 style='text-align:center;'>Model için en önemli değişkenler</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig2)
+                st.markdown("<h3 style='text-align:center;'>Tahmin analizi</h3>",unsafe_allow_html=True)
+                st.plotly_chart(fig3,)
 
             buffer = io.BytesIO()
             with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
@@ -173,11 +187,13 @@ if page == "Tahmin":
             with st.spinner("Tahmin yapılıyor, lütfen bekleyiniz..."):
                 start_date="2020-01-01"
                 df=get_uretim_data(start_date=str(start_date), kaynak='Güneş')
-                fig1,fig2,forc_data= forecast_func(df,select_period(fh_selection), kaynak='Güneş')
+                fig1,fig2,forc_data,fig3= forecast_func(df,select_period(fh_selection), kaynak='Güneş')
                 st.markdown("<h3 style='text-align:center;'>Güneş tahmin sonuçları</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig1)
                 st.markdown("<h3 style='text-align:center;'>Model için en önemli değişkenler</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig2)
+                st.markdown("<h3 style='text-align:center;'>Tahmin analizi</h3>",unsafe_allow_html=True)
+                st.plotly_chart(fig3,)
 
             buffer = io.BytesIO()
             with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
@@ -195,11 +211,13 @@ if page == "Tahmin":
             with st.spinner("Tahmin yapılıyor, lütfen bekleyiniz..."):
                 start_date="2020-01-01"
                 df=get_uretim_data(start_date=str(start_date), kaynak='Fuel Oil')
-                fig1,fig2,forc_data= forecast_func(df,select_period(fh_selection), kaynak='Fuel Oil')
+                fig1,fig2,forc_data,fig3= forecast_func(df,select_period(fh_selection), kaynak='Fuel Oil')
                 st.markdown("<h3 style='text-align:center;'>Fuel Oil tahmin sonuçları</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig1)
                 st.markdown("<h3 style='text-align:center;'>Model için en önemli değişkenler</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig2)
+                st.markdown("<h3 style='text-align:center;'>Tahmin analizi</h3>",unsafe_allow_html=True)
+                st.plotly_chart(fig3,)
 
             buffer = io.BytesIO()
             with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
@@ -217,11 +235,13 @@ if page == "Tahmin":
             with st.spinner("Tahmin yapılıyor, lütfen bekleyiniz..."):
                 start_date="2020-01-01"
                 df=get_uretim_data(start_date=str(start_date), kaynak='Jeo Termal')
-                fig1,fig2,forc_data= forecast_func(df,select_period(fh_selection), kaynak='Jeo Termal')
+                fig1,fig2,forc_data,fig3= forecast_func(df,select_period(fh_selection), kaynak='Jeo Termal')
                 st.markdown("<h3 style='text-align:center;'>Jeo Termal tahmin sonuçları</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig1)
                 st.markdown("<h3 style='text-align:center;'>Model için en önemli değişkenler</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig2)
+                st.markdown("<h3 style='text-align:center;'>Tahmin analizi</h3>",unsafe_allow_html=True)
+                st.plotly_chart(fig3,)
 
             buffer = io.BytesIO()
             with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
@@ -239,11 +259,13 @@ if page == "Tahmin":
             with st.spinner("Tahmin yapılıyor, lütfen bekleyiniz..."):
                 start_date="2020-01-01"
                 df=get_uretim_data(start_date=str(start_date), kaynak='Asfaltit Kömür')
-                fig1,fig2,forc_data= forecast_func(df,select_period(fh_selection), kaynak='Asfaltit Kömür')
+                fig1,fig2,forc_data,fig3= forecast_func(df,select_period(fh_selection), kaynak='Asfaltit Kömür')
                 st.markdown("<h3 style='text-align:center;'>Asfaltit Kömür tahmin sonuçları</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig1)
                 st.markdown("<h3 style='text-align:center;'>Model için en önemli değişkenler</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig2)
+                st.markdown("<h3 style='text-align:center;'>Tahmin analizi</h3>",unsafe_allow_html=True)
+                st.plotly_chart(fig3,)
 
             buffer = io.BytesIO()
             with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
@@ -261,11 +283,13 @@ if page == "Tahmin":
             with st.spinner("Tahmin yapılıyor, lütfen bekleyiniz..."):
                 start_date="2020-01-01"
                 df=get_uretim_data(start_date=str(start_date), kaynak='Taş Kömür')
-                fig1,fig2,forc_data= forecast_func(df,select_period(fh_selection), kaynak='Taş Kömür')
+                fig1,fig2,forc_data,fig3= forecast_func(df,select_period(fh_selection), kaynak='Taş Kömür')
                 st.markdown("<h3 style='text-align:center;'>Taş Kömür tahmin sonuçları</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig1)
                 st.markdown("<h3 style='text-align:center;'>Model için en önemli değişkenler</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig2)
+                st.markdown("<h3 style='text-align:center;'>Tahmin analizi</h3>",unsafe_allow_html=True)
+                st.plotly_chart(fig3,)
 
             buffer = io.BytesIO()
             with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
@@ -283,11 +307,13 @@ if page == "Tahmin":
             with st.spinner("Tahmin yapılıyor, lütfen bekleyiniz..."):
                 start_date="2020-01-01"
                 df=get_uretim_data(start_date=str(start_date), kaynak='Biyokütle')
-                fig1,fig2,forc_data= forecast_func(df,select_period(fh_selection), kaynak='Biyokütle')
+                fig1,fig2,forc_data,fig3= forecast_func(df,select_period(fh_selection), kaynak='Biyokütle')
                 st.markdown("<h3 style='text-align:center;'>Biyokütle tahmin sonuçları</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig1)
                 st.markdown("<h3 style='text-align:center;'>Model için en önemli değişkenler</h3>",unsafe_allow_html=True)
                 st.plotly_chart(fig2)
+                st.markdown("<h3 style='text-align:center;'>Tahmin analizi</h3>",unsafe_allow_html=True)
+                st.plotly_chart(fig3,)
 
             buffer = io.BytesIO()
             with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:

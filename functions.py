@@ -6,11 +6,12 @@ from catboost import CatBoostRegressor
 import plotly.graph_objects as go
 import plotly.express as px
 from tqdm import tqdm
+import nannyml as nml
 import pandas as pd
 import numpy as np
 
 def select_period(period):
-    periods={"1 gün":24,"2 gün":48,"3 gün":72,"1 hafta":168,"2 hafta":336}
+    periods={"1 gün":24,"2 gün":48,"3 gün":72,"1 hafta":168,"2 hafta":336, "1 ay":720}
     return periods[period]
 
 def get_uretim_data(start_date, kaynak=None):
@@ -111,6 +112,25 @@ def forecast_func(df,fh, kaynak=None):
         fold+=1
     print("CV Mean Score:",np.mean(score_list))
 
+    historical_data.rename(columns={'date':'timestamp', kaynak:'y_true'}, inplace=True)
+    historical_data['y_pred'] =  catb.predict(historical_data.drop(columns='y_true'))
+    forecast_data_ = forecast_data.reset_index()
+    forecast_data_.rename(columns={'date':'timestamp'}, inplace=True)
+    forecasted_=pd.DataFrame(unseen_preds[2],columns=['forecasting']).set_index(forecast_data_.index)
+    forecast_data_['y_pred'] = forecasted_
+    reference_df = historical_data
+    analysis_df = forecast_data_
+    estimator = nml.DLE(
+        feature_column_names=list(forecast_data_.columns)[1:-1],
+        y_pred='y_pred',
+        y_true='y_true',
+        timestamp_column_name='timestamp',
+        metrics=['mae'],
+        tune_hyperparameters=False
+    )
+    estimator.fit(reference_df)
+    results = estimator.estimate(analysis_df)
+
     forecasted=pd.DataFrame(unseen_preds[2],columns=['forecasting']).set_index(forecast_data.index)
 
     fig1 = go.Figure()
@@ -119,7 +139,7 @@ def forecast_func(df,fh, kaynak=None):
     fig1.update_layout(legend=dict(orientation="h",yanchor="bottom",y=1.02,xanchor="right",x=1))
     f_importance=pd.concat([pd.Series(X.columns.to_list(),name="Feature"),pd.Series(np.mean(importance,axis=0),name="Importance")],axis=1).sort_values(by="Importance",ascending=True)
     fig2 = px.bar(f_importance.tail(10), x='Importance', y='Feature')
+    fig3 = go.Figure()
+    fig3 = results.plot()
     forc_data = forecasted[["forecasting"]]
-    return fig1, fig2, forc_data
-
-# %%
+    return fig1, fig2, forc_data, fig3
